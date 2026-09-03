@@ -1,0 +1,14 @@
+
+# Environment and secrets
+.env
+.venv/
+
+# Python
+__pycache__/
+*.pyc
+
+# Local database
+data/appointments/*.db
+
+# Generated embeddings
+data/processed/embeddings.json
