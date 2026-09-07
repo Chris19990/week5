@@ -500,6 +500,16 @@ class HealthConnectAssistant:
             return escalation_response(intent)
 
         # ====================================================
+        # GREETING
+        # ====================================================
+
+        if intent == "greeting":
+            return (
+                "Bonjour ! Je suis l'assistant virtuel de HealthConnect. "
+                "Comment puis-je vous aider aujourd'hui ?"
+            )
+
+        # ====================================================
         # RAG
         # ====================================================
 

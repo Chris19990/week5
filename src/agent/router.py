@@ -42,6 +42,17 @@ APPOINTMENT_KEYWORDS = [
 ]
 
 
+GREETING_KEYWORDS = [
+    "bonjour",
+    "salut",
+    "hello",
+    "hi",
+    "hey",
+    "bonsoir",
+    "coucou",
+]
+
+
 def classify_intent(text):
 
     text_lower = text.lower()
@@ -63,6 +74,15 @@ def classify_intent(text):
 
         if keyword in text_lower:
             return "appointment"
+
+    # Greeting.
+    import re
+    cleaned_text = re.sub(r'[^\w\s]', '', text_lower).strip()
+    words = cleaned_text.split()
+    if len(words) <= 3:
+        for keyword in GREETING_KEYWORDS:
+            if keyword in words:
+                return "greeting"
 
     # General clinic information.
     return "general"

@@ -176,16 +176,25 @@ def is_slot_available(
         }
 
     # --------------------------------------------------------
-    # Do not allow past dates
+    # Do not allow past dates and times
     # --------------------------------------------------------
 
-    today = datetime.now().date()
+    now = datetime.now()
+    today = now.date()
+    current_time = now.time()
 
     if requested_date < today:
 
         return {
             "available": False,
             "reason": "Appointments cannot be booked in the past.",
+        }
+
+    if requested_date == today and requested_time < current_time:
+
+        return {
+            "available": False,
+            "reason": "This time has already passed today.",
         }
 
     # --------------------------------------------------------
@@ -373,6 +382,15 @@ def get_available_slots(
         closing,
         "%H:%M",
     )
+
+    now = datetime.now()
+    if requested_date == now.date():
+        if now.time() >= end.time():
+            return {
+                "success": False,
+                "message": f"The clinic's service hours for today have already ended (closed at {closing}). Please choose another date.",
+                "slots": [],
+            }
 
     slots = []
 
